@@ -1,0 +1,8 @@
+/.idea
+/.git
+/.vscode
+*.log
+runtime
+public/uploads
+.env
+.DS_Store
