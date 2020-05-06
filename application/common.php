@@ -1,5 +1,5 @@
 <?php
-
+use think\Db;
 
 /**
  * 数组转换为JSON
@@ -31,6 +31,13 @@ function json2array($string = '')
     return empty($json_arr) ? [] : json_decode($string, true);
 }
 
+/**
+ * 缓存管理
+ * @param $name
+ * @param string $value
+ * @param array $options
+ * @return array|bool|mixed
+ */
 function getCache($name, $value = '', $options = [])
 {
     if ($value) {
@@ -44,8 +51,19 @@ function getCache($name, $value = '', $options = [])
         $pk = isset($options['pk']) ? $options['pk'] : 'id';
         $order = isset($options['order']) ? $options['order'] : $pk . ' asc';
         $where = isset($options['where']) ? $options['where'] : [];
-        $data = \think\Db::name($name)->where($where)->order($order)->column('*', $pk);//查询数据
+        $data = Db::name($name)->where($where)->order($order)->column('*', $pk);//查询数据
         cache($name, $data);//生成缓存
     }
     return $data;
+}
+
+/**
+ * 密码加密
+ * @param $password  密码
+ * @param $password_code 加密字符
+ * @return string
+ */
+function zzcmsPassword($password, $password_code)
+{
+    return md5(md5($password) . md5($password_code));
 }

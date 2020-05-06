@@ -50,7 +50,7 @@ class App extends Container
      * 应用类库命名空间
      * @var string
      */
-    protected $namespace = 'app';
+    protected $namespace = 'zzcms';
 
     /**
      * 应用类库后缀
