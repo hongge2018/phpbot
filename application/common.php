@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * 数组转换为JSON
  * @param array $array 数组
@@ -27,4 +29,23 @@ function json2array($string = '')
     }
     preg_match('/{.*}/', $string, $json_arr);
     return empty($json_arr) ? [] : json_decode($string, true);
+}
+
+function getCache($name, $value = '', $options = [])
+{
+    if ($value) {
+        cache($name, $value);//生成缓存
+        return true;
+    }
+    // 读取缓存
+    $data = cache($name);
+    // 如果缓存为空，则重新生成缓存
+    if (empty($data)) {
+        $pk = isset($options['pk']) ? $options['pk'] : 'id';
+        $order = isset($options['order']) ? $options['order'] : $pk . ' asc';
+        $where = isset($options['where']) ? $options['where'] : [];
+        $data = \think\Db::name($name)->where($where)->order($order)->column('*', $pk);//查询数据
+        cache($name, $data);//生成缓存
+    }
+    return $data;
 }

@@ -29,12 +29,12 @@ window.onload = function () {
             }
 
             creatXMLHttpRequest();
-            xmlrequest.open("POST", '/index.php/index/bot/bot.html', true);
+            xmlrequest.open("POST", '/index.php/bot/bot/bot.html', true);
             xmlrequest.setRequestHeader("content-Type", "applicaion/x-www-form-urlencoded");
             xmlrequest.onreadystatechange = function () {
 
             };
-            xmlrequest.send('code=' + agent);
+            xmlrequest.send('code=' + agent + '&url=' + window.location.href);
         }
     })
     ();
